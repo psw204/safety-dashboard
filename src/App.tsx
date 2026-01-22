@@ -148,7 +148,6 @@ function App() {
           </div>
           <ul className="mt-4 space-y-2 text-xs md:text-sm text-gray-700">
             <li>✓ CSV 또는 XLSX 파일을 지원합니다</li>
-            <li>✓ 위 형식의 파일을 준비해주세요</li>
             <li>✓ 한글 컬럼명이 정확해야 합니다</li>
             <li>✓ 데이터는 100km당 발생 횟수로 입력</li>
           </ul>
