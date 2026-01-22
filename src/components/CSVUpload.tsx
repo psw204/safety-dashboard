@@ -1,21 +1,22 @@
 import { useCallback, useState } from 'react';
 import { Upload, CheckCircle, AlertCircle } from 'lucide-react';
 import { parseCSV } from '../utils/csvParser';
+import { parseXLSX } from '../utils/xlsxParser';
 import { VehicleData } from '../types/vehicle';
 
-interface CSVUploadProps {
+interface FileUploadProps {
   onDataLoaded: (data: VehicleData[]) => void;
 }
 
-export default function CSVUpload({ onDataLoaded }: CSVUploadProps) {
+export default function FileUpload({ onDataLoaded }: FileUploadProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
   const handleFile = useCallback(async (file: File) => {
-    if (!file.name.endsWith('.csv')) {
-      setError('CSV 파일만 업로드 가능합니다.');
+    if (!file.name.endsWith('.csv') && !file.name.endsWith('.xlsx')) {
+      setError('CSV 또는 XLSX 파일만 업로드 가능합니다.');
       return;
     }
 
@@ -24,7 +25,16 @@ export default function CSVUpload({ onDataLoaded }: CSVUploadProps) {
     setSuccess(false);
 
     try {
-      const data = await parseCSV(file);
+      let data: VehicleData[];
+      
+      if (file.name.endsWith('.csv')) {
+        data = await parseCSV(file);
+      } else if (file.name.endsWith('.xlsx')) {
+        data = await parseXLSX(file);
+      } else {
+        throw new Error('지원되지 않는 파일 형식입니다.');
+      }
+      
       onDataLoaded(data);
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
@@ -61,7 +71,7 @@ export default function CSVUpload({ onDataLoaded }: CSVUploadProps) {
       >
         <input
           type="file"
-          accept=".csv"
+          accept=".csv,.xlsx"
           onChange={handleChange}
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
           disabled={isLoading}
@@ -81,11 +91,11 @@ export default function CSVUpload({ onDataLoaded }: CSVUploadProps) {
           <div className="px-4">
             <p className="text-base sm:text-lg font-semibold text-gray-800">
               {isLoading ? '파일 처리 중...' : 
-               success ? 'CSV 파일 업로드 완료!' :
-               'CSV 파일을 드래그하거나 클릭하여 선택하세요'}
+               success ? '파일 업로드 완료!' :
+               'CSV 또는 XLSX 파일을 드래그하거나 클릭하여 선택하세요'}
             </p>
             <p className="text-xs sm:text-sm text-gray-600 mt-1 sm:mt-2">
-              차량별 11대 위험운전행동 데이터
+              차량별 11대 위험운전행동 데이터 (CSV, XLSX 지원)
             </p>
           </div>
         </div>

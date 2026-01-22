@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import CSVUpload from './components/CSVUpload';
+import FileUpload from './components/CSVUpload';
 import Dashboard from './components/Dashboard';
 import { VehicleData } from './types/vehicle';
 import { analyzeVehicles } from './utils/calculations';
 import { parseCSV } from './utils/csvParser';
+import { parseXLSX } from './utils/xlsxParser';
 import sampleDataCSV from './data/sampleData.csv?raw';
+import sampleDataXLSX from './data/sampleData.xlsx?url';
 import { Upload, Sparkles } from 'lucide-react';
 import logo from './assets/images/symbol.jpg';
 import signature from './assets/images/signature.png';
@@ -21,15 +23,26 @@ function App() {
   const loadSampleData = async () => {
     setIsLoading(true);
     try {
-      // CSV 파일을 File 객체로 변환
-      const blob = new Blob([sampleDataCSV], { type: 'text/csv;charset=utf-8;' });
-      const file = new File([blob], 'sampleData.csv', { type: 'text/csv' });
+      // XLSX 파일을 File 객체로 변환
+      const response = await fetch(sampleDataXLSX);
+      const arrayBuffer = await response.arrayBuffer();
+      const blob = new Blob([arrayBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const file = new File([blob], 'sampleData.xlsx', { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       
-      // CSV 파서로 데이터 변환
-      const data = await parseCSV(file);
+      // XLSX 파서로 데이터 변환
+      const data = await parseXLSX(file);
       setVehicles(data);
     } catch (error) {
       console.error('샘플 데이터 로드 실패:', error);
+      // 실패 시 CSV로 fallback
+      try {
+        const blob = new Blob([sampleDataCSV], { type: 'text/csv;charset=utf-8;' });
+        const file = new File([blob], 'sampleData.csv', { type: 'text/csv' });
+        const data = await parseCSV(file);
+        setVehicles(data);
+      } catch (csvError) {
+        console.error('CSV fallback 실패:', csvError);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -59,7 +72,7 @@ function App() {
                 className="flex items-center gap-1 sm:gap-2 px-3 py-2 sm:px-4 sm:py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors text-xs sm:text-sm w-full sm:w-auto justify-center"
               >
                 <Upload className="w-3 h-3 sm:w-4 sm:h-4" />
-                새 파일 업로드
+                CSV/XLSX 파일 업로드
               </button>
             </div>
           </div>
@@ -82,7 +95,7 @@ function App() {
             안전운전 리포트 대시보드
           </h1>
           <p className="text-base md:text-xl text-gray-600 max-w-2xl mx-auto px-4 whitespace-normal">
-            CSV 파일을 업로드하면 11대 위험운전행동을 분석하고<br className="hidden sm:block"/>
+            CSV 또는 XLSX 파일을 업로드하면 11대 위험운전행동을 분석하고<br className="hidden sm:block"/>
             {" "}유류비 절감액과 CO2 감축 효과를 자동으로 계산합니다
           </p>
           <div className="flex items-center justify-center gap-2 md:gap-4 pt-4 flex-wrap">
@@ -122,19 +135,20 @@ function App() {
           </button>
         </div>
 
-        {/* CSV 업로드 */}
-        <CSVUpload onDataLoaded={handleDataLoaded} />
+        {/* 파일 업로드 */}
+        <FileUpload onDataLoaded={handleDataLoaded} />
 
-        {/* 안내 사항 */}
+        {/* 파일 형식 안내 */}
         <div className="bg-white rounded-xl p-4 md:p-6 shadow-lg mx-4 sm:mx-0">
-          <h3 className="font-bold text-base md:text-lg mb-3 text-gray-800">📋 CSV 파일 형식</h3>
+          <h3 className="font-bold text-base md:text-lg mb-3 text-gray-800">📋 파일 형식</h3>
           <div className="bg-gray-50 rounded-lg p-3 md:p-4 font-mono text-xs md:text-sm overflow-x-auto">
             <div className="text-gray-700 break-all">
               인덱스,차량번호,총운행거리(km),합계,과속,장기과속,급가속,급출발,급감속,급정지,급좌회전,급우회전,급유턴,급앞지르기,급진로변경
             </div>
           </div>
           <ul className="mt-4 space-y-2 text-xs md:text-sm text-gray-700">
-            <li>✓ 위 형식의 CSV 파일을 준비해주세요</li>
+            <li>✓ CSV 또는 XLSX 파일을 지원합니다</li>
+            <li>✓ 위 형식의 파일을 준비해주세요</li>
             <li>✓ 한글 컬럼명이 정확해야 합니다</li>
             <li>✓ 데이터는 100km당 발생 횟수로 입력</li>
           </ul>
