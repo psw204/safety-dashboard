@@ -111,7 +111,7 @@ DTG 데이터는 다음 형식의 CSV 또는 XLSX 파일로 제공되어야 합�
 ## 📸 프로젝트 화면
 
 ### 파일 업로드 화면
-<img width="1920" height="1516" alt="file_upload" src="https://github.com/user-attachments/assets/704afa98-21b6-40ae-895b-b860aafc76b4" />
+<img width="1920" height="1516" alt="file_upload" src="https://github.com/user-attachments/assets/089c374c-601f-45f1-8c27-7ac1e089106c" />
 
 ### 메인 대시보드
 <img width="1920" height="3598" alt="dashboard" src="https://github.com/user-attachments/assets/951da5e4-41f3-447d-8465-3b1dc1d5fa95" />
