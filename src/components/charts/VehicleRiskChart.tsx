@@ -12,12 +12,12 @@ export default function VehicleRiskChart({ vehicles }: { vehicles: VehicleAnalys
     }));
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-lg">
-      <h3 className="text-xl font-bold mb-4">차량별 위험도 순위 TOP 10</h3>
-      <ResponsiveContainer width="100%" height={400}>
+    <div className="bg-white rounded-xl p-4 sm:p-6 shadow-lg">
+      <h3 className="text-lg sm:text-xl font-bold mb-4">차량별 위험도 순위 TOP 10</h3>
+      <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data}>
           <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-          <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+          <XAxis dataKey="name" tick={{ fontSize: 10 }} />
           <YAxis label={{ value: '위험도 점수/100km', angle: -90, position: 'insideLeft' }} />
           <Tooltip 
             formatter={(value) => [`${Number(value).toFixed(1)}점`, '위험도']}
@@ -25,7 +25,7 @@ export default function VehicleRiskChart({ vehicles }: { vehicles: VehicleAnalys
           />
           <ReferenceLine y={30} stroke="#EF4444" strokeDasharray="3 3" label="위험" />
           <ReferenceLine y={10} stroke="#FBBF24" strokeDasharray="3 3" label="주의" />
-          <Bar dataKey="위험도" radius={[8, 8, 0, 0]}>
+          <Bar dataKey="위험도" radius={[4, 4, 0, 0]}>
             {data.map((entry, index) => (
               <Cell key={index} fill={entry.color} />
             ))}

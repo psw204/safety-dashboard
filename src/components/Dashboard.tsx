@@ -17,17 +17,17 @@ export default function Dashboard({ vehicles }: DashboardProps) {
   const insights = generateInsights(vehicles);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 py-8 px-4 animate-fadeIn">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 py-4 md:py-8 px-4 animate-fadeIn">
+      <div className="max-w-7xl mx-auto space-y-6 md:space-y-8">
         {/* 헤더 */}
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <img src={tangelJunior} alt="탠젤주니어" className="h-20 w-auto object-contain" />
+        <div className="text-center mb-6 md:mb-8">
+          <div className="flex items-center justify-center gap-2 md:gap-4 mb-3 md:mb-4">
+            <img src={tangelJunior} alt="탠젤주니어" className="h-16 md:h-20 w-auto object-contain" />
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2">
             안전운전 리포트 대시보드
           </h1>
-          <p className="text-gray-600 text-lg">
+          <p className="text-gray-600 text-sm md:text-lg px-4">
             11대 위험운전행동 분석 및 유류비 절감 리포트
           </p>
         </div>
@@ -39,7 +39,7 @@ export default function Dashboard({ vehicles }: DashboardProps) {
         <DetailedMetrics vehicles={vehicles} />
 
         {/* 기존 차트 섹션 */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 md:gap-6">
           <VehicleRiskChart vehicles={vehicles} />
           <BehaviorDistributionChart vehicles={vehicles} />
         </div>
