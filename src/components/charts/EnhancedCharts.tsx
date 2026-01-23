@@ -171,7 +171,7 @@ export default function EnhancedCharts({ vehicles }: EnhancedChartsProps) {
               cx="50%"
               cy="45%"
               labelLine={false}
-              label={({ name, percent }) => `${name}: ${((percent || 0) * 100).toFixed(0)}%`}
+              label={({ name }) => name === '저개선 <10%' ? '저개선' : name === '중개선 10-20%' ? '중개선' : '고개선'}
               outerRadius={80}
               fill="#8884d8"
               dataKey="value"
@@ -209,6 +209,19 @@ export default function EnhancedCharts({ vehicles }: EnhancedChartsProps) {
           />
           </PieChart>
         </ResponsiveContainer>
+        <div className="flex flex-wrap justify-center gap-4">
+          {연비그룹데이터.map((item, index) => (
+            <div key={index} className="flex items-center gap-2">
+              <div 
+                className="w-3 h-3 rounded-full"
+                style={{ backgroundColor: item.color }}
+              />
+              <span className="text-sm text-gray-700">
+                {item.name}: {((item.value / vehicles.length) * 100).toFixed(0)}%
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* 4. 연비 현황 통계 */}
