@@ -4,9 +4,7 @@ import Dashboard from './components/Dashboard';
 import { VehicleData } from './types/vehicle';
 import { analyzeVehicles } from './utils/calculations';
 import { parseCSV } from './utils/csvParser';
-import { parseXLSX } from './utils/xlsxParser';
 import sampleDataCSV from './data/sampleData.csv?raw';
-import sampleDataXLSX from './data/sampleData.xlsx?url';
 import { Upload, Sparkles } from 'lucide-react';
 import logo from './assets/images/symbol.jpg';
 import signature from './assets/images/signature.png';
@@ -23,26 +21,15 @@ function App() {
   const loadSampleData = async () => {
     setIsLoading(true);
     try {
-      // XLSX 파일을 File 객체로 변환
-      const response = await fetch(sampleDataXLSX);
-      const arrayBuffer = await response.arrayBuffer();
-      const blob = new Blob([arrayBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      const file = new File([blob], 'sampleData.xlsx', { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      // CSV 파일을 File 객체로 변환
+      const blob = new Blob([sampleDataCSV], { type: 'text/csv;charset=utf-8;' });
+      const file = new File([blob], 'sampleData.csv', { type: 'text/csv' });
       
-      // XLSX 파서로 데이터 변환
-      const data = await parseXLSX(file);
+      // CSV 파서로 데이터 변환
+      const data = await parseCSV(file);
       setVehicles(data);
     } catch (error) {
       console.error('샘플 데이터 로드 실패:', error);
-      // 실패 시 CSV로 fallback
-      try {
-        const blob = new Blob([sampleDataCSV], { type: 'text/csv;charset=utf-8;' });
-        const file = new File([blob], 'sampleData.csv', { type: 'text/csv' });
-        const data = await parseCSV(file);
-        setVehicles(data);
-      } catch (csvError) {
-        console.error('CSV fallback 실패:', csvError);
-      }
     } finally {
       setIsLoading(false);
     }

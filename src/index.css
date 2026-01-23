@@ -828,3 +828,55 @@ span.flatpickr-weekday,
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+/* Recharts click border removal */
+.recharts-wrapper .recharts-bar-rectangle:focus,
+.recharts-wrapper .recharts-pie-sector:focus {
+  outline: none !important;
+  border: none !important;
+}
+
+.recharts-wrapper .recharts-bar-rectangle,
+.recharts-wrapper .recharts-pie-sector {
+  transition: none !important;
+}
+
+.recharts-wrapper .recharts-bar-rectangle:hover,
+.recharts-wrapper .recharts-pie-sector:hover {
+  filter: brightness(0.9) !important;
+  outline: none !important;
+  border: none !important;
+}
+
+/* Remove focus outline from all chart elements */
+.recharts-layer * {
+  outline: none !important;
+}
+
+/* Remove focus from entire chart container */
+.recharts-wrapper:focus,
+.recharts-surface:focus,
+.recharts-wrapper:focus-visible,
+.recharts-surface:focus-visible {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove all possible focus effects */
+.recharts-wrapper *,
+.recharts-surface * {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Force remove any selection or focus borders */
+.recharts-wrapper :focus,
+.recharts-surface :focus,
+.recharts-wrapper :focus-visible,
+.recharts-surface :focus-visible {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}

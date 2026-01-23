@@ -25,7 +25,7 @@ export default function VehicleRiskChart({ vehicles }: { vehicles: VehicleAnalys
           />
           <ReferenceLine y={30} stroke="#EF4444" strokeDasharray="3 3" label="위험" />
           <ReferenceLine y={10} stroke="#FBBF24" strokeDasharray="3 3" label="주의" />
-          <Bar dataKey="위험도" radius={[4, 4, 0, 0]}>
+          <Bar dataKey="위험도" radius={[4, 4, 0, 0]} isAnimationActive={false}>
             {data.map((entry, index) => (
               <Cell key={index} fill={entry.color} />
             ))}

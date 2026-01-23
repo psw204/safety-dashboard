@@ -70,6 +70,7 @@ export default function EnhancedCharts({ vehicles }: EnhancedChartsProps) {
               dataKey="연비개선율" 
               fill="#8B5CF6"
               radius={[4, 4, 0, 0]}
+              isAnimationActive={false}
             />
           </BarChart>
         </ResponsiveContainer>
@@ -96,8 +97,8 @@ export default function EnhancedCharts({ vehicles }: EnhancedChartsProps) {
               ]}
               labelFormatter={(label) => `차량: ${label}`}
             />
-            <Bar dataKey="위험도점수" fill="#EF4444" radius={[4, 4, 0, 0]} />
-            <Bar dataKey="연비개선율" fill="#10B981" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="위험도점수" fill="#EF4444" radius={[4, 4, 0, 0]} isAnimationActive={false} />
+            <Bar dataKey="연비개선율" fill="#10B981" radius={[4, 4, 0, 0]} isAnimationActive={false} />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -116,6 +117,7 @@ export default function EnhancedCharts({ vehicles }: EnhancedChartsProps) {
               outerRadius={80}
               fill="#8884d8"
               dataKey="value"
+              isAnimationActive={false}
             >
               {연비그룹데이터.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />

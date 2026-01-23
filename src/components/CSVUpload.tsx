@@ -95,7 +95,7 @@ export default function FileUpload({ onDataLoaded }: FileUploadProps) {
                'CSV 또는 XLSX 파일을 드래그하거나 클릭하여 선택하세요'}
             </p>
             <p className="text-xs sm:text-sm text-gray-600 mt-1 sm:mt-2">
-              차량별 11대 위험운전행동 데이터 (CSV, XLSX 지원)
+              차량별 11대 위험운전행동 데이터
             </p>
           </div>
         </div>
