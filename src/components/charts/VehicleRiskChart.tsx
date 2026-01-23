@@ -21,6 +21,7 @@ export default function VehicleRiskChart({ vehicles }: { vehicles: VehicleAnalys
           <YAxis label={{ value: '위험도 점수/100km', angle: -90, position: 'insideLeft' }} />
           <Tooltip 
             formatter={(value) => [`${Number(value).toFixed(1)}점`, '위험도']}
+            labelFormatter={(label) => `차량: ${label}`}
             contentStyle={{ 
               background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.8) 100%)',
               backdropFilter: 'blur(20px) saturate(180%)',

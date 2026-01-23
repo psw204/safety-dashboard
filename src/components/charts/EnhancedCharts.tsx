@@ -66,10 +66,10 @@ export default function EnhancedCharts({ vehicles }: EnhancedChartsProps) {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis 
               dataKey="차량번호" 
-              tick={{ fontSize: 12 }}
+              tick={{ fontSize: 12, dy: 20 }}
               angle={-45}
               textAnchor="end"
-              height={60}
+              height={100}
             />
             <YAxis tick={{ fontSize: 12 }} />
             <Tooltip 
@@ -119,10 +119,10 @@ export default function EnhancedCharts({ vehicles }: EnhancedChartsProps) {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis 
               dataKey="차량번호" 
-              tick={{ fontSize: 12 }}
+              tick={{ fontSize: 12, dy: 20 }}
               angle={-45}
               textAnchor="end"
-              height={60}
+              height={100}
             />
             <YAxis tick={{ fontSize: 12 }} />
             <Tooltip 
