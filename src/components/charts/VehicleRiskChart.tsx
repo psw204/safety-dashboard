@@ -26,11 +26,10 @@ export default function VehicleRiskChart({ vehicles }: { vehicles: VehicleAnalys
               backdropFilter: 'blur(20px) saturate(180%)',
               WebkitBackdropFilter: 'blur(20px) saturate(180%)',
               border: '1px solid rgba(255, 255, 255, 0.3)',
-              borderRadius: '12px',
-              fontSize: 'clamp(12px, 3vw, 14px)',
+              borderRadius: '16px',
+              fontSize: '14px',
               fontWeight: '600',
-              padding: 'clamp(8px 12px, 16px 20px)',
-              maxWidth: '280px',
+              padding: '16px 20px',
               boxShadow: '0 8px 32px rgba(31, 38, 135, 0.15), 0 4px 16px rgba(31, 38, 135, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 0 rgba(255, 255, 255, 0.1)',
               color: '#1a1a1a',
               textShadow: '0 1px 2px rgba(255, 255, 255, 0.8)',
@@ -40,7 +39,7 @@ export default function VehicleRiskChart({ vehicles }: { vehicles: VehicleAnalys
             labelStyle={{ 
               color: '#6b7280', 
               fontWeight: '500',
-              fontSize: 'clamp(10px, 2.5vw, 12px)',
+              fontSize: '12px',
               textTransform: 'uppercase',
               letterSpacing: '0.05em'
             }}

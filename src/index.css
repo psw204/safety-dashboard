@@ -853,6 +853,19 @@ span.flatpickr-weekday,
   outline: none !important;
 }
 
+/* Mobile-friendly tooltips */
+@media (max-width: 768px) {
+  /* Responsive pie chart labels */
+  .recharts-pie-label-text {
+    font-size: 10px !important;
+    font-weight: 500 !important;
+  }
+  .recharts-label {
+    font-size: 10px !important;
+    font-weight: 500 !important;
+  }
+}
+
 /* Remove focus from entire chart container */
 .recharts-wrapper:focus,
 .recharts-surface:focus,

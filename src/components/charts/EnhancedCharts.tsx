@@ -1,11 +1,24 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { VehicleAnalysis } from '../../types/vehicle';
+import { useState, useEffect } from 'react';
 
 interface EnhancedChartsProps {
   vehicles: VehicleAnalysis[];
 }
 
 export default function EnhancedCharts({ vehicles }: EnhancedChartsProps) {
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   // 연비 개선율 분포 데이터
   const 연비개선데이터 = vehicles
     .map(v => ({
@@ -27,17 +40,17 @@ export default function EnhancedCharts({ vehicles }: EnhancedChartsProps) {
   // 연비 개선 그룹 파이차트 데이터
   const 연비그룹데이터 = [
     { 
-      name: '고개선 (20%+)', 
+      name: '고개선 20%+', 
       value: vehicles.filter(v => v.연비개선율 >= 20).length,
       color: '#EF4444'
     },
     { 
-      name: '중개선 (10-20%)', 
+      name: '중개선 10-20%', 
       value: vehicles.filter(v => v.연비개선율 >= 10 && v.연비개선율 < 20).length,
       color: '#FBBF24'
     },
     { 
-      name: '저개선 (<10%)', 
+      name: '저개선 <10%', 
       value: vehicles.filter(v => v.연비개선율 < 10).length,
       color: '#10B981'
     }
@@ -66,28 +79,27 @@ export default function EnhancedCharts({ vehicles }: EnhancedChartsProps) {
               ]}
               labelFormatter={(label) => `차량: ${label}`}
               contentStyle={{ 
-                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.8) 100%)',
-                backdropFilter: 'blur(20px) saturate(180%)',
-                WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-                border: '1px solid rgba(255, 255, 255, 0.3)',
-                borderRadius: '12px',
-                fontSize: 'clamp(12px, 3vw, 14px)',
-                fontWeight: '600',
-                padding: 'clamp(8px 12px, 16px 20px)',
-                maxWidth: '280px',
-                boxShadow: '0 8px 32px rgba(31, 38, 135, 0.15), 0 4px 16px rgba(31, 38, 135, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 0 rgba(255, 255, 255, 0.1)',
-                color: '#1a1a1a',
-                textShadow: '0 1px 2px rgba(255, 255, 255, 0.8)',
-                letterSpacing: '-0.02em'
-              }}
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.8) 100%)',
+              backdropFilter: 'blur(20px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+              border: '1px solid rgba(255, 255, 255, 0.3)',
+              borderRadius: '16px',
+              fontSize: '14px',
+              fontWeight: '600',
+              padding: '16px 20px',
+              boxShadow: '0 8px 32px rgba(31, 38, 135, 0.15), 0 4px 16px rgba(31, 38, 135, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 0 rgba(255, 255, 255, 0.1)',
+              color: '#1a1a1a',
+              textShadow: '0 1px 2px rgba(255, 255, 255, 0.8)',
+              letterSpacing: '-0.02em'
+            }}
               wrapperStyle={{ zIndex: 1000 }}
               labelStyle={{ 
-                color: '#6b7280', 
-                fontWeight: '500',
-                fontSize: 'clamp(10px, 2.5vw, 12px)',
-                textTransform: 'uppercase',
-                letterSpacing: '0.05em'
-              }}
+              color: '#6b7280', 
+              fontWeight: '500',
+              fontSize: '12px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em'
+            }}
             />
             <Bar 
               dataKey="연비개선율" 
@@ -120,28 +132,28 @@ export default function EnhancedCharts({ vehicles }: EnhancedChartsProps) {
               ]}
               labelFormatter={(label) => `차량: ${label}`}
               contentStyle={{ 
-                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.8) 100%)',
-                backdropFilter: 'blur(20px) saturate(180%)',
-                WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-                border: '1px solid rgba(255, 255, 255, 0.3)',
-                borderRadius: '12px',
-                fontSize: 'clamp(12px, 3vw, 14px)',
-                fontWeight: '600',
-                padding: 'clamp(8px 12px, 16px 20px)',
-                maxWidth: '280px',
-                boxShadow: '0 8px 32px rgba(31, 38, 135, 0.15), 0 4px 16px rgba(31, 38, 135, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 0 rgba(255, 255, 255, 0.1)',
-                color: '#1a1a1a',
-                textShadow: '0 1px 2px rgba(255, 255, 255, 0.8)',
-                letterSpacing: '-0.02em'
-              }}
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.8) 100%)',
+              backdropFilter: 'blur(20px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+              border: '1px solid rgba(255, 255, 255, 0.3)',
+              borderRadius: '16px',
+              fontSize: '14px',
+              fontWeight: '600',
+              padding: '16px 20px',
+              boxShadow: '0 8px 32px rgba(31, 38, 135, 0.15), 0 4px 16px rgba(31, 38, 135, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 0 rgba(255, 255, 255, 0.1)',
+              color: '#1a1a1a',
+              textShadow: '0 1px 2px rgba(255, 255, 255, 0.8)',
+              letterSpacing: '-0.02em'
+            }}
               wrapperStyle={{ zIndex: 1000 }}
               labelStyle={{ 
-                color: '#6b7280', 
-                fontWeight: '500',
-                fontSize: 'clamp(10px, 2.5vw, 12px)',
-                textTransform: 'uppercase',
-                letterSpacing: '0.05em'
-              }}
+              color: '#6b7280', 
+              fontWeight: '500',
+              fontSize: '12px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
+              marginBottom: '4px'
+            }}
             />
             <Bar dataKey="위험도점수" fill="#EF4444" radius={[4, 4, 0, 0]} isAnimationActive={false} />
             <Bar dataKey="연비개선율" fill="#10B981" radius={[4, 4, 0, 0]} isAnimationActive={false} />
@@ -171,6 +183,7 @@ export default function EnhancedCharts({ vehicles }: EnhancedChartsProps) {
             </Pie>
             <Tooltip 
             formatter={(value) => [`${value}대`, '차량 수']} 
+            trigger={isMobile ? "click" : undefined}
             contentStyle={{ 
               background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.8) 100%)',
               backdropFilter: 'blur(20px) saturate(180%)',
